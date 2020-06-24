@@ -1,0 +1,14 @@
+Package: time2test
+Type: Package
+Title: Recommended Time-to-Test
+Version: 0.1.0
+Author: Yair Goldberg [aut, cre] Li Hsu [aut]
+Maintainer: Yair Goldberg <yairgo@technion.ac.il>
+Description: This package implements the estimation time to test proposed in the paper "Quantifying the Clinical Utility of Time-to-Test Recommended based on Risk Prediction Models" by Li Hsu, Yair Goldberg, and Yingye Zheng.
+License: GPL-3
+LazyData: true
+Encoding: UTF-8
+Imports: purrr, dplyr, arules, survival, tibble, stats, stringr, magrittr
+RoxygenNote: 7.1.0
+Depends: 
+    R (>= 2.10)

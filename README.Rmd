@@ -1,0 +1,63 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+---
+### R/time2test: Quantifying the Clinical Utility of Time-to-Test Recommended based on Risk Prediction Models
+
+
+[Yair Goldberg](https://yairgo.net.technion.ac.il/) and [Li Hsu](https://www.fredhutch.org/en/faculty-lab-directory/hsu-li.html)
+
+[R/time2test](https://github.com/yairgoldy/time2test) is an [R](https:/www.r-project.org) package. This package implements the inverse probability weighting estimator and the doubly robust estimator for time-to-test quantaties in the presence of competing risks inclusing TPP, FPP, FNP, TNP, Sensitivity, and Specificity. See details in the paper "Quantifying the Clinical Utility of Time-to-Test Recommended based on Risk Prediction Models" by Hsu, Goldberg, and Zheng.
+
+#### Installation
+
+You can install it from its [GitHub repository](https://github.com/yairgoldy/time2test). You first need to install the [devtools](https://github.com/hadley/devtools) package.
+
+```r
+install.packages("devtools")
+```
+
+Then install R/time2test using the `install_github` function in the
+[devtools](https://github.com/hadley/devtools) package.
+
+```r
+library(devtools)
+install_github("yairgoldy/time2test")
+```
+
+#### Example use
+Creates dataset following Setting I in the paper. Specifically, we generated the failure time $T_1$ for the disease of interest from an exponential distribution with mean $1.8\exp(Z)$, where  $Z \sim N(0,1)$, and generated the failure time $T_2$  for the competing risks also from an exponential distribution but with mean $1.4\exp(0.5 Z)$. 
+For the censoring distribution, we considered two scenarios. `simple` where the censoring time $C$ is completely independent of $T_1$, $T_2$ and $Z$, such that $C \sim \mbox{Exponential} (3.0)$; and `complex` where $C$ is conditionally independent of $T_1$ and $T_2$ given $Z$ such that $C\sim \mbox{Exponential} \{3.0\exp(2Z)\}$.
+
+
+
+```{r}
+
+library(time2test)
+dat_simple <- example1(seed =1, n = 100, censoring = "simple")
+dat_complex <- example1(seed =1, n = 100, censoring = "complex")
+
+
+```
+
+Compare the inverse probability censoring weighted estimator to the doubly roubst estimator for the simple scenario. 
+```{r}
+est_simple <-  dr_estimator(dat_simple)
+print(est_simple)
+summary_statistics(est_simple)
+
+```
+
+Compare the inverse probability censoring weighted estimator to the doubly roubst estimator for the complex scenario. 
+```{r}
+est_complex <-  dr_estimator(dat_complex)
+print(est_complex)
+summary_statistics(est_complex)
+
+```
+
+
+
